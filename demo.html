@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery.ui.core.css" />
+  <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery.ui.resizable.css" />
+
+  <link href="dist/angular-gridster.min.css" rel="stylesheet">
+
+  <link href="demo/style.css" rel="stylesheet">
+
+</head>
+<body ng-app="myApp">
+
+  <div class="container" ng-controller="AppCtrl">
+    <div class="page-header">
+      <a class="pull-right btn btn-primary" ng-click="addWidget()"><i class="icon-plus"></i> Add Widget</a>
+      <a class="pull-right btn btn-warning" ng-click="clear()"><i class="icon-trash"></i> Clear</a>
+      <h1>ez-gridster
+        <select ng-change="changeDashboard()" ng-model="selectedDashboardId" ng-options="d.id as d.name for d in dashboards | object2Array | orderBy:'id'">
+        </select>
+      </h1>
+    </div>
+    <div gridster="gridsterOptions">
+      <ul>
+        <li gridster-item="widget" ng-repeat="widget in dashboard.widgets">
+          <div class="box" ng-controller="CustomWidgetCtrl">
+            <div class="box-header">
+              <h3>{{ widget.name }}</h3>
+              <div class="box-header-btns pull-right">
+                <a title="settings" ng-click="openSettings(widget)"><i class="icon-cog"></i></a>
+                <a title="Remove widget" ng-click="remove(widget)"><i class="icon-remove"></i></a>
+              </div>
+            </div>
+            <div class="box-content">
+              <input type="text" integer ng-model="form.row" size="1" />
+              ,
+              <input type="text" integer ng-model="form.col" size="1" />
+              <br />
+              <input type="text" integer ng-model="form.sizeX" size="1" />
+              x
+              <input type="text" integer ng-model="form.sizeY" size="1" />
+              <hr>
+              <button ng-click="update(widget)">Update</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="bower_components/es5-shim/es5-shim.js"></script>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="bower_components/jquery-ui/ui/jquery.ui.core.js"></script>
+  <script src="bower_components/jquery-ui/ui/jquery.ui.widget.js"></script>
+  <script src="bower_components/jquery-ui/ui/jquery.ui.mouse.js"></script>
+  <script src="bower_components/jquery-ui/ui/jquery.ui.draggable.js"></script>
+  <script src="bower_components/jquery-ui/ui/jquery.ui.resizable.js"></script>
+
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+
+  <script src="src/angular-gridster.js"></script>
+
+  <script src="demo/script.js"></script>
+
+  <script id="widget_settings.html" type="text/ng-template">
+    <div>
+    <form name="_form" class="form-horizontal" ng-submit="submit(_form)">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
+        <h3>Widget Settings</h3>
+      </div>
+
+      <div class="modal-body no-padding">
+          <div class="row">
+            <div class="form-group" ng-class="{error: _form.name.$error && _form.submitted}">
+              <label class="control-label col-lg-3 col-md-3">Name</label>
+              <div class="col-lg-9 col-md-9">
+                <input name="name" type="text" ng-model="form.name" class="form-control"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group" ng-class="{error: _form.sizeX.$error && _form.submitted}">
+                <label class="control-label col-lg-6 col-md-6">Width</label>
+                <div class="col-lg-6 col-md-6">
+                  <select name="sizeX" ng-model="form.sizeX" class="form-control" ng-options="option.id as option.name for option in sizeOptions"></select>
+                </div>
+              </div>
+             </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label class="control-label col-lg-6 col-md-6">Height</label>
+                <div class="col-lg-6 col-md-6">
+                  <select name="sizeY" ng-model="form.sizeY" class="form-control" ng-options="option.id as option.name for option in sizeOptions"></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group" ng-class="{error: _form.sizeX.$error && _form.submitted}">
+                <label class="control-label col-lg-6 col-md-6">Column</label>
+                <div class="col-lg-6 col-md-6">
+                  <select name="col" ng-model="form.col" class="form-control" ng-options="option.id as option.name for option in sizeOptions"></select>
+                </div>
+              </div>
+             </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label class="control-label col-lg-6 col-md-6">Row</label>
+                <div class="col-lg-6 col-md-6">
+                  <select name="row" ng-model="form.row" class="form-control" ng-options="option.id as option.name for option in sizeOptions"></select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+      </div>
+
+      <div class="modal-footer">
+        <a ng-click="remove()" class="btn btn-danger pull-left" tabindex="-1"><i class="icon-trash"></i>Delete</a>
+        <a ng-click="dismiss()" class="btn btn-default" tabindex="-1"><i class="icon-remove"></i>Cancel</a>
+        <button type="submit" class="btn btn-primary btn-lg"><i class="icon-ok"></i>Save</button>
+      </div>
+    </form>
+    </div>
+  </script>
+
+</body>
+
+</html>
+
+

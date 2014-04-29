@@ -79,88 +79,103 @@
       </p>
       <div gridster="gridsterOpts">
         <ul>
-          <li gridster-item="item" ng-repeat="item in standardItems">
-            <input type="text" integer ng-model="item.row" size="1" />
-            ,
-            <input type="text" integer ng-model="item.col" size="1" />
-            <br />
-            <input type="text" integer ng-model="item.sizeX" size="1" />
-            x
-            <input type="text" integer ng-model="item.sizeY" size="1" />
+          <li gridster-item ng-repeat="item in standardItems">
+            <div ng-controller="WidgetCtrl">
+              <input type="text" integer ng-model="form.row" size="1" />
+              ,
+              <input type="text" integer ng-model="form.col" size="1" />
+              <br />
+              <input type="text" integer ng-model="form.sizeX" size="1" />
+              x
+              <input type="text" integer ng-model="form.sizeY" size="1" />
+              <hr>
+              <button ng-click="update(item)">Update</button>
+              <button ng-click="remove('standardItems', item)">Remove</button>
+            </div>
           </li>
         </ul>
       </div>
 
-      <h2>Custom Items</h2>
-      <p>
-        Each item provides its own dimensions but with custom fields defined using customItemMap: { position: [row, col], size: { x: sizeX, y: sizeY }}
-      </p>
-      <div gridster="gridsterOpts">
-        <ul>
-          <li gridster-item="customItemMap" ng-repeat="item in customItems">
-            <input type="text" integer ng-model="item.position[0]" size="1" />
-            ,
-            <input type="text" integer ng-model="item.position[1]" size="1" />
-            <br />
-            <input type="text" integer ng-model="item.size.x" size="1" />
-            x
-            <input type="text" integer ng-model="item.size.y" size="1" />
-          </li>
-        </ul>
-      </div>
+      <!--<h2>Custom Items</h2>-->
+      <!--<p>-->
+        <!--Each item provides its own dimensions but with custom fields defined using customItemMap: { position: [row, col], size: { x: sizeX, y: sizeY }}-->
+      <!--</p>-->
+      <!--<div gridster="gridsterOpts">-->
+        <!--<ul>-->
+          <!--<li gridster-item="customItemMap" ng-repeat="item in customItems">-->
+            <!--<div ng-controller="WidgetCtrl">-->
+              <!--<input type="text" integer ng-model="item.position[0]" size="1" />-->
+              <!--,-->
+              <!--<input type="text" integer ng-model="item.position[1]" size="1" />-->
+              <!--<br />-->
+              <!--<input type="text" integer ng-model="item.size.x" size="1" />-->
+              <!--x-->
+              <!--<input type="text" integer ng-model="item.size.y" size="1" />-->
 
-      <h2>Custom Items2</h2>
-      <p>
-        Each item provides its own dimensions but with custom fields indicated using html attributes: row, col, sizex, sizey.  Size can also be in the form of data-size-x or data-sizex.
-      </p>
-      <div gridster="gridsterOpts">
-        <ul>
-          <li
-            gridster-item
-            row="item.position[0]"
-            col="item.position[1]"
-            size-x="item.size.x"
-            size-y="item.size.y"
-            ng-repeat="item in customItems"
-            >
-            <input type="text" integer ng-model="item.position[0]" size="1" />
-            ,
-            <input type="text" integer ng-model="item.position[1]" size="1" />
-            <br />
-            <input type="text" integer ng-model="item.size.x" size="1" />
-            x
-            <input type="text" integer ng-model="item.size.y" size="1" />
-          </li>
-        </ul>
-      </div>
+              <!--<hr>-->
+              <!--<button ng-click="update(item)">Update</button>-->
+            <!--</div>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
 
-      <h2>Empty Items</h2>
-      <p>
-        Each item stores the standard options as an object within itself: { grid: {row: row, col: col, sizeX: sizeX, sizeY: sizeY }}
-      </p>
-      <div gridster="gridsterOpts">
-        <ul>
-          <li gridster-item="item.grid" ng-repeat="item in emptyItems">
-            <input type="text" integer ng-model="item.grid.row" size="1" />
-            ,
-            <input type="text" integer ng-model="item.grid.col" size="1" />
-            <br />
-            <input type="text" integer ng-model="item.grid.sizeX" size="1" />
-            x
-            <input type="text" integer ng-model="item.grid.sizeY" size="1" />
-          </li>
-        </ul>
-      </div>
+      <!--<h2>Custom Items2</h2>-->
+      <!--<p>-->
+        <!--Each item provides its own dimensions but with custom fields indicated using html attributes: row, col, sizex, sizey.  Size can also be in the form of data-size-x or data-sizex.-->
+      <!--</p>-->
+      <!--<div gridster="gridsterOpts">-->
+        <!--<ul>-->
+          <!--<li-->
+            <!--gridster-item-->
+            <!--row="item.position[0]"-->
+            <!--col="item.position[1]"-->
+            <!--size-x="item.size.x"-->
+            <!--size-y="item.size.y"-->
+            <!--ng-repeat="item in customItems"-->
+            <!-->-->
 
-      <h2>No Configuration or Binding</h2>
-      <p>
-        No data binding or configuration provided.
-      </p>
-      <div gridster>
-        <ul>
-          <li gridster-item></li>
-        </ul>
-      </div>
+            <!--<div ng-controller="WidgetCtrl">-->
+              <!--<input type="text" integer ng-model="item.position[0]" size="1" />-->
+              <!--,-->
+              <!--<input type="text" integer ng-model="item.position[1]" size="1" />-->
+              <!--<br />-->
+              <!--<input type="text" integer ng-model="item.size.x" size="1" />-->
+              <!--x-->
+              <!--<input type="text" integer ng-model="item.size.y" size="1" />-->
+              <!--<hr>-->
+              <!--<button ng-click="update(item)">Update</button>-->
+            <!--</div>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+
+      <!--<h2>Empty Items</h2>-->
+      <!--<p>-->
+        <!--Each item stores the standard options as an object within itself: { grid: {row: row, col: col, sizeX: sizeX, sizeY: sizeY }}-->
+      <!--</p>-->
+      <!--<div gridster="gridsterOpts">-->
+        <!--<ul>-->
+          <!--<li gridster-item="item.grid" ng-repeat="item in emptyItems">-->
+            <!--<input type="text" integer ng-model="item.grid.row" size="1" />-->
+            <!--,-->
+            <!--<input type="text" integer ng-model="item.grid.col" size="1" />-->
+            <!--<br />-->
+            <!--<input type="text" integer ng-model="item.grid.sizeX" size="1" />-->
+            <!--x-->
+            <!--<input type="text" integer ng-model="item.grid.sizeY" size="1" />-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+
+      <!--<h2>No Configuration or Binding</h2>-->
+      <!--<p>-->
+        <!--No data binding or configuration provided.-->
+      <!--</p>-->
+      <!--<div gridster>-->
+        <!--<ul>-->
+          <!--<li gridster-item></li>-->
+        <!--</ul>-->
+      <!--</div>-->
     </div>
 
 		<script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -193,6 +208,25 @@
               }
           };
       })
+
+      .controller('WidgetCtrl', function($scope) {
+          var item = angular.extend({}, $scope.item); // need new object to prevent auto update
+          $scope.form = {
+            row: item.row,
+            col: item.col,
+            sizeX: item.sizeX,
+            sizeY: item.sizeY,
+          }
+
+          $scope.remove = function(name, item) {
+            $scope[name].splice($scope[name].indexOf(item), 1);
+          };
+
+          $scope.update = function(item) {
+            angular.extend(item, $scope.form);
+          };
+      })
+
       .controller('MainCtrl', function($scope) {
 
         $scope.gridsterOpts = {
