@@ -104,12 +104,18 @@ describe('gridster directive', function() {
 		expect(stopCount).toBe(0);
 
 		dragHelper(handle, 50); // should resize to next width step
-
 		expect($widget.width()).toBe(320);
 		expect($scope.dashboard.widgets[0].sizeX).toBe(2);
 		expect(startCount).toBe(1);
 		expect(resizeCount).toBe(1);
 		expect(stopCount).toBe(1);
+
+		dragHelper(handle, 50); // should resize to next width step
+		expect($scope.dashboard.widgets[0].sizeX).toBe(3);
+		expect(startCount).toBe(2);
+		expect(resizeCount).toBe(2);
+		expect(stopCount).toBe(2);
+
 	});
 
 });
