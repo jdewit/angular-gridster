@@ -20,7 +20,7 @@ module.exports = function(config) {
 			'bower_components/angular/angular.js',
 			'bower_components/angular-mocks/angular-mocks.js',
 			'src/angular-gridster.js',
-			'test/spec/*.js'
+			'test/spec/gridster-directive.js'
 		],
 
 		preprocessors: {
@@ -57,7 +57,7 @@ module.exports = function(config) {
 		// - Safari (only Mac)
 		// - PhantomJS
 		// - IE (only Windows)
-		browsers: ['PhantomJS'],
+		browsers: ['Chrome'],//'PhantomJS'],
 
 
 		// Continuous Integration mode

@@ -507,10 +507,11 @@ angular.module('gridster', [])
 				$elem.addClass('gridster');
 
 				return function(scope, $elem, attrs, controller) {
-					$elem.removeClass('gridster-loaded');
+//					$elem.removeClass('gridster-loaded');
+//
 
 					var $preview = angular.element('<div class="gridster-item gridster-preview-holder"></div>').appendTo($elem);
-
+//
 					// update grid items on config changes
 					scope.$watch('config', function(newOptions, oldOptions) {
 						if (!newOptions || newOptions === oldOptions) {
@@ -527,71 +528,71 @@ angular.module('gridster', [])
 							$rootScope.$broadcast('resizable-changed');
 						}
 
-						controller.redraw();
-						updateHeight();
+//						controller.redraw();
+//						updateHeight();
 					}, true);
-
-					var updateHeight = function() {
-						controller.$element.css('height', (controller.options.gridHeight * controller.options.curRowHeight) + controller.options.margins[0] + 'px');
-					};
-
-					scope.$watch(function() {
-						return controller.options.gridHeight;
-					}, updateHeight);
-
-					scope.$watch(function() {
-						return controller.options.isMobile;
-					}, function(isMobile) {
-						if (isMobile) {
-							controller.$element.addClass('gridster-mobile');
-						} else {
-							controller.$element.removeClass('gridster-mobile');
-						}
-					});
-
-					var prevWidth = $elem.width();
-
-					function resize() {
-						var width = $elem.width();
-						if (width === prevWidth || $elem.find('.gridster-item-moving').length > 0) {
-							return;
-						}
-						prevWidth = width;
-						$elem.removeClass('gridster-loaded');
-						controller.redraw();
-						updateHeight();
-
-
-						if (typeof controller.options.resizable !== 'undefined' && controller.options.resizable.enabled) {
-							scope.$broadcast('gridster-resized', [width, $elem.height()]);
-						}
-
-						$elem.addClass('gridster-loaded');
-					}
-
-					angular.element($elem).resize(function() {
-						resize();
-						scope.$apply();
-					});
-					scope.$watch(function() {
-						return $elem.width();
-					}, resize);
-
-					$elem.bind('$destroy', function() {
-						try {
-							this.$preview.remove();
-							controller.destroy();
-						} catch (e) {}
-					});
-
+//
+//					var updateHeight = function() {
+//						controller.$element.css('height', (controller.options.gridHeight * controller.options.curRowHeight) + controller.options.margins[0] + 'px');
+//					};
+//
+//					scope.$watch(function() {
+//						return controller.options.gridHeight;
+//					}, updateHeight);
+//
+//					scope.$watch(function() {
+//						return controller.options.isMobile;
+//					}, function(isMobile) {
+//						if (isMobile) {
+//							controller.$element.addClass('gridster-mobile');
+//						} else {
+//							controller.$element.removeClass('gridster-mobile');
+//						}
+//					});
+//
+//					var prevWidth = $elem.width();
+//
+//					function resize() {
+//						var width = $elem.width();
+//						if (width === prevWidth || $elem.find('.gridster-item-moving').length > 0) {
+//							return;
+//						}
+//						prevWidth = width;
+//						$elem.removeClass('gridster-loaded');
+//						controller.redraw();
+//						updateHeight();
+//
+//
+//						if (typeof controller.options.resizable !== 'undefined' && controller.options.resizable.enabled) {
+//							scope.$broadcast('gridster-resized', [width, $elem.height()]);
+//						}
+//
+//						$elem.addClass('gridster-loaded');
+//					}
+//
+//					angular.element($elem).resize(function() {
+//						resize();
+//						scope.$apply();
+//					});
+//					scope.$watch(function() {
+//						return $elem.width();
+//					}, resize);
+//
+//					$elem.bind('$destroy', function() {
+//						try {
+//							this.$preview.remove();
+//							controller.destroy();
+//						} catch (e) {}
+//					});
+//
 					controller.init($elem, $preview);
 					controller.setOptions();
-					controller.redraw();
-
-					$timeout(function() {
-						controller.floatItemsUp();
-						$elem.addClass('gridster-loaded');
-					}, 100);
+//					controller.redraw();
+//
+//					$timeout(function() {
+//						controller.floatItemsUp();
+//						$elem.addClass('gridster-loaded');
+//					}, 100);
 				};
 			}
 		};
@@ -715,113 +716,113 @@ angular.module('gridster', [])
 			restrict: 'EAC',
 			require: '^gridster',
 			link: function(scope, $el, attrs, gridster) {
-				var optionsKey = attrs.gridsterItem,
-					options;
+//				var optionsKey = attrs.gridsterItem,
+//					options;
+//
+//				var item = $controller('GridsterItemCtrl'),
+//					draggablePossible = typeof $el.draggable === 'function',
+//					resizablePossible = typeof $el.resizable === 'function';
+//
+//				//bind the items position properties
+//				if (optionsKey) {
+//					var $optionsGetter = $parse(optionsKey);
+//					options = $optionsGetter(scope) || {};
+//					if (!options && $optionsGetter.assign) {
+//						options = {
+//							row: item.row,
+//							col: item.col,
+//							sizeX: item.sizeX,
+//							sizeY: item.sizeY
+//						};
+//						$optionsGetter.assign(scope, options);
+//					}
+//				} else {
+//					options = attrs;
+//				}
+//
+//				item.init($el, gridster);
+//
+//				$el.addClass('gridster-item');
+//				$el.addClass('gridster-item-moving');
+//
+//				function setDraggable() {
+//					if (draggablePossible) {
+//						if (typeof gridster.options.draggable !== 'undefined' && gridster.options.draggable.enabled) {
+//							$el.draggable({
+//								handle: gridster.options.draggable && gridster.options.draggable.handle ? gridster.options.draggable.handle : null,
+//								refreshPositions: true,
+//								start: function(e, widget) {
+//									$el.addClass('gridster-item-moving');
+//									item.dragging = true;
+//									gridster.$preview.show();
+//									gridster.setElementSizeX(gridster.$preview, item.sizeX);
+//									gridster.setElementSizeY(gridster.$preview, item.sizeY);
+//									gridster.setElementPosition(gridster.$preview, item.row, item.col);
+//									gridster.updateHeight(item.sizeY);
+//									scope.$apply(function() {
+//										if (gridster.options.draggable && gridster.options.draggable.start) {
+//											gridster.options.draggable.start(e, widget, $el);
+//										}
+//									});
+//								},
+//								drag: function(e, widget) {
+//									item.row = gridster.pixelsToRows(widget.position.top);
+//									item.col = gridster.pixelsToColumns(widget.position.left);
+//									scope.$apply(function() {
+//										if (gridster.options.draggable && gridster.options.draggable.drag) {
+//											gridster.options.draggable.drag(e, widget, $el);
+//										}
+//									});
+//								},
+//								stop: function(e, widget) {
+//									$el.removeClass('gridster-item-moving');
+//									item.row = gridster.pixelsToRows(widget.position.top);
+//									item.col = gridster.pixelsToColumns(widget.position.left);
+//									item.dragging = false;
+//									gridster.$preview.hide();
+//									item.setPosition(item.row, item.col);
+//									gridster.updateHeight();
+//									scope.$apply(function() {
+//										if (gridster.options.draggable && gridster.options.draggable.stop) {
+//											gridster.options.draggable.stop(e, widget, $el);
+//										}
+//									});
+//								}
+//							});
+//						} else {
+//							try {
+//								$el.draggable('destroy');
+//							} catch (e) {}
+//						}
+//					}
+//				}
+//
+//				function updateResizableDimensions(enabled) {
+//					if (resizablePossible && enabled) {
+//						$el.resizable('option', 'minHeight', gridster.options.minRows * gridster.options.curRowHeight - gridster.options.margins[0]);
+//						$el.resizable('option', 'maxHeight', gridster.options.maxRows * gridster.options.curRowHeight - gridster.options.margins[0]);
+//						$el.resizable('option', 'minWidth', gridster.options.minColumns * gridster.options.curColWidth - gridster.options.margins[1]);
+//						$el.resizable('option', 'maxWidth', gridster.options.columns * gridster.options.curColWidth - gridster.options.margins[1]);
+//					}
+//				}
 
-				var item = $controller('GridsterItemCtrl'),
-					draggablePossible = typeof $el.draggable === 'function',
-					resizablePossible = typeof $el.resizable === 'function';
-
-				//bind the items position properties
-				if (optionsKey) {
-					var $optionsGetter = $parse(optionsKey);
-					options = $optionsGetter(scope) || {};
-					if (!options && $optionsGetter.assign) {
-						options = {
-							row: item.row,
-							col: item.col,
-							sizeX: item.sizeX,
-							sizeY: item.sizeY
-						};
-						$optionsGetter.assign(scope, options);
-					}
-				} else {
-					options = attrs;
-				}
-
-				item.init($el, gridster);
-
-				$el.addClass('gridster-item');
-				$el.addClass('gridster-item-moving');
-
-				function setDraggable() {
-					if (draggablePossible) {
-						if (typeof gridster.options.draggable !== 'undefined' && gridster.options.draggable.enabled) {
-							$el.draggable({
-								handle: gridster.options.draggable && gridster.options.draggable.handle ? gridster.options.draggable.handle : null,
-								refreshPositions: true,
-								start: function(e, widget) {
-									$el.addClass('gridster-item-moving');
-									item.dragging = true;
-									gridster.$preview.show();
-									gridster.setElementSizeX(gridster.$preview, item.sizeX);
-									gridster.setElementSizeY(gridster.$preview, item.sizeY);
-									gridster.setElementPosition(gridster.$preview, item.row, item.col);
-									gridster.updateHeight(item.sizeY);
-									scope.$apply(function() {
-										if (gridster.options.draggable && gridster.options.draggable.start) {
-											gridster.options.draggable.start(e, widget, $el);
-										}
-									});
-								},
-								drag: function(e, widget) {
-									item.row = gridster.pixelsToRows(widget.position.top);
-									item.col = gridster.pixelsToColumns(widget.position.left);
-									scope.$apply(function() {
-										if (gridster.options.draggable && gridster.options.draggable.drag) {
-											gridster.options.draggable.drag(e, widget, $el);
-										}
-									});
-								},
-								stop: function(e, widget) {
-									$el.removeClass('gridster-item-moving');
-									item.row = gridster.pixelsToRows(widget.position.top);
-									item.col = gridster.pixelsToColumns(widget.position.left);
-									item.dragging = false;
-									gridster.$preview.hide();
-									item.setPosition(item.row, item.col);
-									gridster.updateHeight();
-									scope.$apply(function() {
-										if (gridster.options.draggable && gridster.options.draggable.stop) {
-											gridster.options.draggable.stop(e, widget, $el);
-										}
-									});
-								}
-							});
-						} else {
-							try {
-								$el.draggable('destroy');
-							} catch (e) {}
-						}
-					}
-				}
-
-				function updateResizableDimensions(enabled) {
-					if (resizablePossible && enabled) {
-						$el.resizable('option', 'minHeight', gridster.options.minRows * gridster.options.curRowHeight - gridster.options.margins[0]);
-						$el.resizable('option', 'maxHeight', gridster.options.maxRows * gridster.options.curRowHeight - gridster.options.margins[0]);
-						$el.resizable('option', 'minWidth', gridster.options.minColumns * gridster.options.curColWidth - gridster.options.margins[1]);
-						$el.resizable('option', 'maxWidth', gridster.options.columns * gridster.options.curColWidth - gridster.options.margins[1]);
-					}
-				}
-
-				function setResizable() {
-					if (resizablePossible) {
-						if (typeof gridster.options.resizable !== 'undefined' && gridster.options.resizable.enabled) {
+//				function setResizable() {
+//					if (resizablePossible) {
+//						if (typeof gridster.options.resizable !== 'undefined' && gridster.options.resizable.enabled) {
 							$el.resizable({
 								autoHide: true,
 								handles: 'n, e, s, w, ne, se, sw, nw',
-								minHeight: gridster.options.minRows * gridster.options.curRowHeight - gridster.options.margins[0],
-								maxHeight: gridster.options.maxRows * gridster.options.curRowHeight - gridster.options.margins[0],
-								minWidth: gridster.options.minColumns * gridster.options.curColWidth - gridster.options.margins[1],
-								maxWidth: gridster.options.columns * gridster.options.curColWidth - gridster.options.margins[1],
+//								minHeight: gridster.options.minRows * gridster.options.curRowHeight - gridster.options.margins[0],
+//								maxHeight: gridster.options.maxRows * gridster.options.curRowHeight - gridster.options.margins[0],
+//								minWidth: gridster.options.minColumns * gridster.options.curColWidth - gridster.options.margins[1],
+//								maxWidth: gridster.options.columns * gridster.options.curColWidth - gridster.options.margins[1],
 								start: function(e, widget) {
-									$el.addClass('gridster-item-moving');
-									item.resizing = true;
-									item.dragging = true;
-									gridster.$preview.fadeIn(300);
-									gridster.setElementSizeX(gridster.$preview, item.sizeX);
-									gridster.setElementSizeY(gridster.$preview, item.sizeY);
+//									$el.addClass('gridster-item-moving');
+//									item.resizing = true;
+//									item.dragging = true;
+//									gridster.$preview.fadeIn(300);
+//									gridster.setElementSizeX(gridster.$preview, item.sizeX);
+//									gridster.setElementSizeY(gridster.$preview, item.sizeY);
 									scope.$apply(function() {
 										if (gridster.options.resizable && gridster.options.resizable.start) {
 											gridster.options.resizable.start(e, widget, $el);
@@ -829,10 +830,10 @@ angular.module('gridster', [])
 									});
 								},
 								resize: function(e, widget) {
-									item.row = gridster.pixelsToRows(widget.position.top, false);
-									item.col = gridster.pixelsToColumns(widget.position.left, false);
-									item.sizeX = gridster.pixelsToColumns(widget.size.width, true);
-									item.sizeY = gridster.pixelsToRows(widget.size.height, true);
+//									item.row = gridster.pixelsToRows(widget.position.top, false);
+//									item.col = gridster.pixelsToColumns(widget.position.left, false);
+//									item.sizeX = gridster.pixelsToColumns(widget.size.width, true);
+//									item.sizeY = gridster.pixelsToRows(widget.size.height, true);
 									scope.$apply(function() {
 										if (gridster.options.resizable && gridster.options.resizable.resize) {
 											gridster.options.resizable.resize(e, widget, $el);
@@ -840,17 +841,17 @@ angular.module('gridster', [])
 									});
 								},
 								stop: function(e, widget) {
-									$el.removeClass('gridster-item-moving');
-									item.row = gridster.pixelsToRows(widget.position.top, false);
-									item.col = gridster.pixelsToColumns(widget.position.left, false);
-									item.sizeX = gridster.pixelsToColumns(widget.size.width, true);
-									item.sizeY = gridster.pixelsToRows(widget.size.height, true);
-									item.resizing = false;
-									item.dragging = false;
-									gridster.$preview.fadeOut(300);
-									item.setPosition(item.row, item.col);
-									item.setSizeY(item.sizeY);
-									item.setSizeX(item.sizeX);
+//									$el.removeClass('gridster-item-moving');
+//									item.row = gridster.pixelsToRows(widget.position.top, false);
+//									item.col = gridster.pixelsToColumns(widget.position.left, false);
+//									item.sizeX = gridster.pixelsToColumns(widget.size.width, true);
+//									item.sizeY = gridster.pixelsToRows(widget.size.height, true);
+//									item.resizing = false;
+//									item.dragging = false;
+//									gridster.$preview.fadeOut(300);
+//									item.setPosition(item.row, item.col);
+//									item.setSizeY(item.sizeY);
+//									item.setSizeX(item.sizeX);
 									scope.$apply(function() {
 										if (gridster.options.resizable && gridster.options.resizable.stop) {
 											gridster.options.resizable.stop(e, widget, $el);
@@ -858,114 +859,112 @@ angular.module('gridster', [])
 									});
 								}
 							});
-						} else {
-							try {
-								$el.resizable('destroy');
-							} catch (e) {}
-						}
-					}
-				}
-
-				var aspects = ['sizeX', 'sizeY', 'row', 'col'],
-					$getters = {};
-
-				var aspectFn = function(aspect) {
-					var key;
-					if (typeof options[aspect] === 'string') {
-						key = options[aspect];
-					} else if (typeof options[aspect.toLowerCase()] === 'string') {
-						key = options[aspect.toLowerCase()];
-					} else if (optionsKey) {
-						key = $parse(optionsKey + '.' + aspect);
-					} else {
-						return;
-					}
-					$getters[aspect] = $parse(key);
-					scope.$watch(key, function(newVal) {
-						newVal = parseInt(newVal, 10);
-						if (!isNaN(newVal)) {
-							item[aspect] = newVal;
-						}
-					});
-					var val = $getters[aspect](scope);
-					if (typeof val === 'number') {
-						item[aspect] = val;
-					}
-				};
-
-				for (var i = 0, l = aspects.length; i < l; ++i) {
-					aspectFn(aspects[i]);
-				}
-
-				function positionChanged() {
-					item.setPosition(item.row, item.col);
-					if ($getters.row && $getters.row.assign) {
-						$getters.row.assign(scope, item.row);
-					}
-					if ($getters.col && $getters.col.assign) {
-						$getters.col.assign(scope, item.col);
-					}
-				}
-				scope.$watch(function() {
-					return item.row;
-				}, positionChanged);
-				scope.$watch(function() {
-					return item.col;
-				}, positionChanged);
-
-				scope.$on('draggable-changed', function() {
-					setDraggable();
-				});
-
-				scope.$on('resizable-changed', function() {
-					setResizable();
-				});
-
-				scope.$on('gridster-resized', function() {
-					updateResizableDimensions();
-				});
-
-				setDraggable();
-				setResizable();
-
-				scope.$watch(function() {
-					return item.sizeY;
-				}, function(sizeY) {
-					item.setSizeY(sizeY);
-					if ($getters.sizeY && $getters.sizeY.assign) {
-						$getters.sizeY.assign(scope, item.sizeY);
-					}
-				});
-				scope.$watch(function() {
-					return item.sizeX;
-				}, function(sizeX) {
-					item.setSizeX(sizeX);
-					if ($getters.sizeX && $getters.sizeX.assign) {
-						$getters.sizeX.assign(scope, item.sizeX);
-					}
-				});
-
-				$timeout(function() {
-					$el.removeClass('gridster-item-moving');
-				}, 100);
-
-				return $el.bind('$destroy', function() {
-					try {
-						gridster.removeItem(item);
-					} catch (e) {}
-					try {
-						item.destroy();
-					} catch (e) {}
-					try {
-						$el.draggable('destroy');
-					} catch (e) {}
-					try {
-						$el.resizable('destroy');
-					} catch (e) {}
-				});
+//						} else {
+//							try {
+//								$el.resizable('destroy');
+//							} catch (e) {}
+//						}
+//					}
+//				}
+//
+//				var aspects = ['sizeX', 'sizeY', 'row', 'col'],
+//					$getters = {};
+//
+//				var aspectFn = function(aspect) {
+//					var key;
+//					if (typeof options[aspect] === 'string') {
+//						key = options[aspect];
+//					} else if (typeof options[aspect.toLowerCase()] === 'string') {
+//						key = options[aspect.toLowerCase()];
+//					} else if (optionsKey) {
+//						key = $parse(optionsKey + '.' + aspect);
+//					} else {
+//						return;
+//					}
+//					$getters[aspect] = $parse(key);
+//					scope.$watch(key, function(newVal) {
+//						newVal = parseInt(newVal, 10);
+//						if (!isNaN(newVal)) {
+//							item[aspect] = newVal;
+//						}
+//					});
+//					var val = $getters[aspect](scope);
+//					if (typeof val === 'number') {
+//						item[aspect] = val;
+//					}
+//				};
+//
+//				for (var i = 0, l = aspects.length; i < l; ++i) {
+//					aspectFn(aspects[i]);
+//				}
+//
+//				function positionChanged() {
+//					item.setPosition(item.row, item.col);
+//					if ($getters.row && $getters.row.assign) {
+//						$getters.row.assign(scope, item.row);
+//					}
+//					if ($getters.col && $getters.col.assign) {
+//						$getters.col.assign(scope, item.col);
+//					}
+//				}
+//				scope.$watch(function() {
+//					return item.row;
+//				}, positionChanged);
+//				scope.$watch(function() {
+//					return item.col;
+//				}, positionChanged);
+//
+//				scope.$on('draggable-changed', function() {
+//					setDraggable();
+//				});
+//
+//				scope.$on('resizable-changed', function() {
+//					setResizable();
+//				});
+//
+//				scope.$on('gridster-resized', function() {
+//					updateResizableDimensions();
+//				});
+//
+//				setDraggable();
+//				setResizable();
+//
+//				scope.$watch(function() {
+//					return item.sizeY;
+//				}, function(sizeY) {
+//					item.setSizeY(sizeY);
+//					if ($getters.sizeY && $getters.sizeY.assign) {
+//						$getters.sizeY.assign(scope, item.sizeY);
+//					}
+//				});
+//				scope.$watch(function() {
+//					return item.sizeX;
+//				}, function(sizeX) {
+//					item.setSizeX(sizeX);
+//					if ($getters.sizeX && $getters.sizeX.assign) {
+//						$getters.sizeX.assign(scope, item.sizeX);
+//					}
+//				});
+//
+//				$timeout(function() {
+//					$el.removeClass('gridster-item-moving');
+//				}, 100);
+//
+//				return $el.bind('$destroy', function() {
+//					try {
+//						gridster.removeItem(item);
+//					} catch (e) {}
+//					try {
+//						item.destroy();
+//					} catch (e) {}
+//					try {
+//						$el.draggable('destroy');
+//					} catch (e) {}
+//					try {
+//						$el.resizable('destroy');
+//					} catch (e) {}
+//				});
 			}
 		};
 	}
-])
-
-;
+]);
